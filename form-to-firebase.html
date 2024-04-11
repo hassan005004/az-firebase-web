@@ -4,7 +4,7 @@
     <li>When you submit form name use as key</li>
   </ul>
 </div>
-<form action="" class="firebaseajax" data-ref="reviews">
+<form action="" class="form-to-firebase" data-ref="reviews">
   <div class="form-group">
     <label for=""><b class="mb-2">Your Name</b></label>
     <div class="input-group mb-2"> 
@@ -39,6 +39,7 @@
 
 <script>
 	$(document).ready(function(){
+      // function we created just copy
 			$.fn.formToFirebase = async function(thisForm,isRefresh,resetInput) {
 				firebase.initializeApp(firebaseConfig)
 				console.log("ref");
@@ -58,7 +59,8 @@
 				return ot;
 			}
 
-			$('.firebaseajax').submit(function(e) {
+      // here you can call this function
+			$('.form-to-firebase').submit(function(e) {
 				e.preventDefault();
 
 				// To add new entry to form

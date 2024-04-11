@@ -1,0 +1,78 @@
+<div>
+  <ul>
+    <li>Add this to your table data-ref="reviews"</li>
+    <li>When you submit form name use as key</li>
+  </ul>
+</div>
+<table class="firebase-to-table" data-ref="reviews">
+  <thead>
+    <th>Name</th>
+    <th>Review</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td data-col="name"></td>
+      <td data-col="review"></td>
+    </tr>
+  </tbody>
+</table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "x",
+    authDomain: "x",
+    databaseURL: "x",
+    projectId: "x",
+    storageBucket: "x",
+    messagingSenderId: "x",
+    appId: "x"
+  };
+</script>
+
+<script>
+	$(document).ready(function(){
+
+    // function we created for data show + just copy
+    $.fn.firebaseToTable = async function(thisTable) {
+      firebase.initializeApp(firebaseConfig)
+      ref = $(thisTable).attr('data-ref');
+      console.log(ref);
+
+      const dataFromDb = firebase.database().ref(ref)
+      .limitToLast(20);
+
+      data = null;
+      // $(thisTable).find('tbody').empty();
+      const $clonedRows = $(thisTable).find('tbody tr').clone();
+
+      dataFromDb.on('value', (snapshot) => {
+        data = snapshot.val();
+        console.log(data);
+        if (data) {
+          // Loop through each item in the data
+          Object.keys(data).forEach((key) => {
+            const item = data[key];
+            // Create a new table row
+            const newRow = $clonedRows.clone();
+            // Loop through each column in the table
+            newRow.find('[data-col]').each(function() {
+              const colName = $(this).attr('data-col');
+              // Set the text of the corresponding column with data from Firebase
+              $(this).text(item[colName]);
+            });
+            // Append the new row to the table body
+            $(thisTable).find('tbody').append(newRow);
+          });
+        }
+      });
+      return data;
+    }
+
+    // call function to load data
+    $.fn.firebaseToTable('.firebase-to-table');
+
+	});
+</script>
