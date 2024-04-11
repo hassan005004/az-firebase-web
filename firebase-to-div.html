@@ -1,21 +1,21 @@
 <div>
   <ul>
-    <li>Add data-ref="reviews" to target table</li>
-    <li>Add data-col="name" to td</li>
+    <li>Add data-ref="reviews" to target div</li>
+    <li>Target div must have one empty div with display none css</li>
+    <li>Add data-col="name" to all div/p/span tags inside empty div</li>
   </ul>
 </div>
-<table class="firebase-to-table" data-ref="reviews">
-  <thead>
-    <th>Name</th>
-    <th>Review</th>
-  </thead>
-  <tbody>
-    <tr>
-      <td data-col="name"></td>
-      <td data-col="review"></td>
-    </tr>
-  </tbody>
-</table>
+<div class="firebase-to-div" data-ref="reviews">
+  <!-- this div need -->
+  <div style="display:none; border:1px solid black">
+    <div>
+      <span>Name: </span> <span data-col="name"></span>
+    </div>
+    <div>
+      <span>Review: </span> <span data-col="review"></span>
+    </div>
+  </div>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
@@ -36,7 +36,7 @@
 	$(document).ready(function(){
 
     // function we created for data show + just copy
-    $.fn.firebaseToTable = async function(element) {
+    $.fn.firebaseToDiv = async function(element) {
       firebase.initializeApp(firebaseConfig)
       ref = $(element).attr('data-ref');
       console.log(ref);
@@ -45,8 +45,7 @@
       .limitToLast(20);
 
       data = null;
-      // $(element).find('tbody').empty();
-      const $clonedRows = $(element).find('tbody tr').clone();
+      const $clonedRows = $(element).find('div:first').clone().show();
 
       dataFromDb.on('value', (snapshot) => {
         data = snapshot.val();
@@ -64,15 +63,16 @@
               $(this).text(item[colName]);
             });
             // Append the new row to the table body
-            $(element).find('tbody').append(newRow);
+            $(element).append(newRow);
           });
+
         }
       });
       return data;
     }
 
     // call function to load data
-    $.fn.firebaseToTable('.firebase-to-table');
+    $.fn.firebaseToDiv('.firebase-to-div');
 
 	});
 </script>
