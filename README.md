@@ -1,6 +1,4 @@
-#
-form-to-firebase.html
-#
+# form-to-firebase.html
 Just name a class to your form and form submit to firebase
 ```
 <script>
@@ -18,9 +16,7 @@ $('.firebaseajax').submit(function(e) {
 </script>
 ```
 
-#
-firebase-to-table.html
-#
+# firebase-to-table.html
 Check the file
 ```
 Call the function
@@ -29,9 +25,7 @@ $.fn.firebaseToTable('.firebase-to-table');
 </script>
 ```
 
-#
-firebase-to-div.html
-#
+# firebase-to-div.html
 Check the file
 ```
 Call the function
