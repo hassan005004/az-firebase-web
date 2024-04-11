@@ -1,0 +1,79 @@
+<div>
+  <ul>
+    <li>Add this to your form data-ref="reviews"</li>
+    <li>When you submit form name use as key</li>
+  </ul>
+</div>
+<form action="" class="firebaseajax" data-ref="reviews">
+  <div class="form-group">
+    <label for=""><b class="mb-2">Your Name</b></label>
+    <div class="input-group mb-2"> 
+      <input type="text" class="form-control rounded" name="name" value="Name" placeholder="Your Name" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for=""><b class="mb-2">Review</b></label>
+    <div class="input-group mb-2"> 
+      <textarea rows="5" type="text" class="form-control rounded" name="review" placeholder="Describe your experience with product">Rate it 5 star</textarea>
+    </div>
+  </div>
+  <div>
+    <button type="submit" class="btn btn-primary px-4 py-2" style="font-size: 18px;">Rate It</button>
+  </div>
+</form>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "x",
+    authDomain: "x",
+    databaseURL: "x",
+    projectId: "x",
+    storageBucket: "x",
+    messagingSenderId: "x",
+    appId: "x"
+  };
+</script>
+
+<script>
+	$(document).ready(function(){
+			$.fn.formToFirebase = async function(thisForm,isRefresh,resetInput) {
+				firebase.initializeApp(firebaseConfig)
+				console.log("ref");
+				ref = $(thisForm).attr('data-ref');
+				console.log("ref");
+				const productdFormDB = firebase.database().ref('reviews');
+				var ot = productdFormDB.push();
+
+				const dataToSet = {};
+				const formData = new FormData(thisForm);
+				console.log([...formData.entries()]);
+				for (const [key, value] of formData.entries()) {
+					dataToSet[key] = value;
+				}
+				await ot.set(dataToSet);
+
+				return ot;
+			}
+
+			$('.firebaseajax').submit(function(e) {
+				e.preventDefault();
+
+				// To add new entry to form
+				// $(this).append('<input type="hidden" name="newAttribute" value="newValue">');
+
+				output = $.fn.formToFirebase(this,'no','no');
+				output.then(function(data) {
+					// handle success
+					alert('done');
+					console.log(data);
+				}).catch(e => {
+					// handle catch
+					alert('are you sure do you set the config from firebase');
+					console.log(e);
+				});
+			});
+	});
+</script>
