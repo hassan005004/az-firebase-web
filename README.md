@@ -21,18 +21,21 @@ $('.firebaseajax').submit(function(e) {
 #
 firebase-to-table.html
 #
-Just name a class to your table and add data attbiute to your table td
-
+Check the file
 ```
-Html work inside table element
-<table class="firebase-to-table" data-ref="reviews">
-
-Html work for td inside tbody
-<td data-col="name"></td>
-<td data-col="review"></td>
-
 Call the function
 <script>
 $.fn.firebaseToTable('.firebase-to-table');
+</script>
+```
+
+#
+firebase-to-div.html
+#
+Check the file
+```
+Call the function
+<script>
+$.fn.firebaseToDiv('.firebase-to-div');
 </script>
 ```
