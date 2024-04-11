@@ -45,9 +45,9 @@
       .limitToLast(20);
 
       data = null;
-      const $clonedRows = $(element).find('div:first').clone().show();
 
       dataFromDb.on('value', (snapshot) => {
+        const $clonedRows = $(element).find('div:first').clone().show();
         data = snapshot.val();
         console.log(data);
         if (data) {

@@ -1,3 +1,16 @@
+## limitations
+Realtime database only
+
+## things to cover
+Following points are remaing
+- Add picture upload + retrive
+- Orderby
+- Pagination
+- records per page
+- records counting
+- loader - i think no need
+- when new record added please record not clearing
+
 # form-to-firebase.html
 Just name a class to your form and form submit to firebase
 ```
@@ -33,3 +46,4 @@ Call the function
 $.fn.firebaseToDiv('.firebase-to-div');
 </script>
 ```
+

@@ -46,9 +46,9 @@
 
       data = null;
       // $(element).find('tbody').empty();
-      const $clonedRows = $(element).find('tbody tr').clone();
 
       dataFromDb.on('value', (snapshot) => {
+        const $clonedRows = $(element).find('tbody tr').clone();
         data = snapshot.val();
         console.log(data);
         if (data) {
