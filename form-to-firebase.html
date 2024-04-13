@@ -42,10 +42,11 @@
       // function we created just copy
 			$.fn.formToFirebase = async function(element,isRefresh,resetInput) {
 				firebase.initializeApp(firebaseConfig)
-				console.log("ref");
+				
 				ref = $(element).attr('data-ref');
-				console.log("ref");
-				const productdFormDB = firebase.database().ref('reviews');
+
+				// this is your query to change
+				const productdFormDB = firebase.database().ref(ref);
 				var ot = productdFormDB.push();
 
 				const dataToSet = {};

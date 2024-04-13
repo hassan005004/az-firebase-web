@@ -1,15 +1,17 @@
 ## limitations
 Realtime database only
+## Noteable
+- If you want to change query then search for this "this is your query to change"
 
 ## things to cover
 Following points are remaing
 - Add picture upload + retrive
 - Orderby
 - Pagination
-- records per page
-- records counting
-- loader - i think no need
-- when new record added please record not clearing
+- Records per page
+- Records counting
+- Loader - i think no need
+- When new record added please record not clearing
 
 # form-to-firebase.html
 Just name a class to your form and form submit to firebase

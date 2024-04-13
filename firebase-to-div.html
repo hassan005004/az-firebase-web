@@ -39,8 +39,8 @@
     $.fn.firebaseToDiv = async function(element) {
       firebase.initializeApp(firebaseConfig)
       ref = $(element).attr('data-ref');
-      console.log(ref);
 
+      // this is your query to change
       const dataFromDb = firebase.database().ref(ref)
       .limitToLast(20);
 
