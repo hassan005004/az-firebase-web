@@ -1,18 +1,18 @@
 <div>
   <ul>
-    <li>Add data-ref="reviews" to target div</li>
+    <li>Add data-fb-ref="reviews" to target div</li>
     <li>Target div must have one empty div with display none css</li>
-    <li>Add data-col="name" to all div/p/span tags inside empty div</li>
+    <li>Add data-fb-col="name" to all div/p/span tags inside empty div</li>
   </ul>
 </div>
-<div class="firebase-to-div" data-ref="reviews">
+<div class="firebase-to-div" data-fb-ref="reviews">
   <!-- this div need -->
   <div style="display:none; border:1px solid black">
     <div>
-      <span>Name: </span> <span data-col="name"></span>
+      <span>Name: </span> <span data-fb-col="name"></span>
     </div>
     <div>
-      <span>Review: </span> <span data-col="review"></span>
+      <span>Review: </span> <span data-fb-col="review"></span>
     </div>
   </div>
 </div>
@@ -38,7 +38,7 @@
     // function we created for data show + just copy
     $.fn.firebaseToDiv = async function(element) {
       firebase.initializeApp(firebaseConfig)
-      ref = $(element).attr('data-ref');
+      ref = $(element).attr('data-fb-ref');
 
       // this is your query to change
       const dataFromDb = firebase.database().ref(ref)
@@ -57,8 +57,8 @@
             // Create a new table row
             const newRow = $clonedRows.clone();
             // Loop through each column in the table
-            newRow.find('[data-col]').each(function() {
-              const colName = $(this).attr('data-col');
+            newRow.find('[data-fb-col]').each(function() {
+              const colName = $(this).attr('data-fb-col');
               // Set the text of the corresponding column with data from Firebase
               $(this).text(item[colName]);
             });

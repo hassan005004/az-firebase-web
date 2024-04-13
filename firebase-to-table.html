@@ -1,18 +1,18 @@
 <div>
   <ul>
-    <li>Add data-ref="reviews" to target table</li>
-    <li>Add data-col="name" to td</li>
+    <li>Add data-fb-ref="reviews" to target table</li>
+    <li>Add data-fb-col="name" to td</li>
   </ul>
 </div>
-<table class="firebase-to-table" data-ref="reviews">
+<table class="firebase-to-table" data-fb-ref="reviews">
   <thead>
     <th>Name</th>
     <th>Review</th>
   </thead>
   <tbody>
     <tr>
-      <td data-col="name"></td>
-      <td data-col="review"></td>
+      <td data-fb-col="name"></td>
+      <td data-fb-col="review"></td>
     </tr>
   </tbody>
 </table>
@@ -38,7 +38,7 @@
     // function we created for data show + just copy
     $.fn.firebaseToTable = async function(element) {
       firebase.initializeApp(firebaseConfig)
-      ref = $(element).attr('data-ref');
+      ref = $(element).attr('data-fb-ref');
       console.log(ref);
 
       // this is your query to change
@@ -59,8 +59,8 @@
             // Create a new table row
             const newRow = $clonedRows.clone();
             // Loop through each column in the table
-            newRow.find('[data-col]').each(function() {
-              const colName = $(this).attr('data-col');
+            newRow.find('[data-fb-col]').each(function() {
+              const colName = $(this).attr('data-fb-col');
               // Set the text of the corresponding column with data from Firebase
               $(this).text(item[colName]);
             });

@@ -1,10 +1,10 @@
 <div>
   <ul>
-    <li>Add this to your form data-ref="reviews"</li>
+    <li>Add this to your form data-fb-ref="reviews"</li>
     <li>When you submit form name use as key</li>
   </ul>
 </div>
-<form action="" class="form-to-firebase" data-ref="reviews">
+<form action="" class="form-to-firebase" data-fb-ref="reviews">
   <div class="form-group">
     <label for=""><b class="mb-2">Your Name</b></label>
     <div class="input-group mb-2"> 
@@ -43,7 +43,7 @@
 			$.fn.formToFirebase = async function(element,isRefresh,resetInput) {
 				firebase.initializeApp(firebaseConfig)
 				
-				ref = $(element).attr('data-ref');
+				ref = $(element).attr('data-fb-ref');
 
 				// this is your query to change
 				const productdFormDB = firebase.database().ref(ref);
