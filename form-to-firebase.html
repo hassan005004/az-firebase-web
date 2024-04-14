@@ -40,7 +40,7 @@
 <script>
 	$(document).ready(function(){
       // function we created just copy
-			$.fn.formToFirebase = async function(element,isRefresh,resetInput) {
+			$.fn.formToFirebase = async function(element) {
 				firebase.initializeApp(firebaseConfig)
 				
 				ref = $(element).attr('data-fb-ref');
@@ -67,7 +67,7 @@
 				// To add new entry to form
 				// $(this).append('<input type="hidden" name="newAttribute" value="newValue">');
 
-				output = $.fn.formToFirebase(this,'no','no');
+				output = $.fn.formToFirebase(this);
 				output.then(function(data) {
 					// handle success
 					alert('done');

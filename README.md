@@ -49,3 +49,19 @@ $.fn.firebaseToDiv('.firebase-to-div');
 </script>
 ```
 
+# framework.html
+```
+step1) initilize
+await new FirebaseTable('reviews');
+
+step2) methods
+limit()
+orderByKey()
+orderByValue()
+where('column', 'operator', 'value')
+
+step3) run query methods
+count()
+isExists()
+get()
+```

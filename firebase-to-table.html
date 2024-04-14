@@ -4,7 +4,10 @@
     <li>Add data-fb-col="name" to td</li>
   </ul>
 </div>
-<table class="firebase-to-table" data-fb-ref="reviews">
+<table class="firebase-to-table"
+    data-fb-ref="reviews"
+    data-fb-limit="20"
+  >
   <thead>
     <th>Name</th>
     <th>Review</th>
@@ -39,11 +42,12 @@
     $.fn.firebaseToTable = async function(element) {
       firebase.initializeApp(firebaseConfig)
       ref = $(element).attr('data-fb-ref');
+      limit = $(element).attr('data-fb-limit');
       console.log(ref);
 
       // this is your query to change
       const dataFromDb = firebase.database().ref(ref)
-      .limitToLast(20);
+      .limitToLast(limit);
 
       data = null;
       // $(element).find('tbody').empty();

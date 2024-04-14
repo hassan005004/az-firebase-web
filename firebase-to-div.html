@@ -5,7 +5,10 @@
     <li>Add data-fb-col="name" to all div/p/span tags inside empty div</li>
   </ul>
 </div>
-<div class="firebase-to-div" data-fb-ref="reviews">
+<div class="firebase-to-div" 
+    data-fb-ref="reviews"
+    data-fb-limit="20"
+  >
   <!-- this div need -->
   <div style="display:none; border:1px solid black">
     <div>
@@ -39,10 +42,11 @@
     $.fn.firebaseToDiv = async function(element) {
       firebase.initializeApp(firebaseConfig)
       ref = $(element).attr('data-fb-ref');
+      limit = $(element).attr('data-fb-limit');
 
       // this is your query to change
       const dataFromDb = firebase.database().ref(ref)
-      .limitToLast(20);
+      .limitToLast(limit);
 
       data = null;
 

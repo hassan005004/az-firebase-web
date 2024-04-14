@@ -1,0 +1,170 @@
+<div id="console-result"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
+<script>
+  const firebaseConfig = {
+    apiKey: "x",
+    authDomain: "x",
+    databaseURL: "x",
+    projectId: "x",
+    storageBucket: "x",
+    messagingSenderId: "x",
+    appId: "x"
+  };
+</script>
+<script>
+/*
+* this is library
+*/
+class FirebaseTable {
+  constructor(ref) {
+    firebase.initializeApp(firebaseConfig);
+    this.query = firebase.database().ref(ref);
+    this.records = null;
+    this.whereApplied = 0;
+  }
+
+  limit(limitValue, start_end) {
+    if(start_end == 'start'){
+      this.query = this.query.limitToFirst(limitValue);
+    }else{
+      this.query = this.query.limitToLast(limitValue);
+    }
+    return this;
+  }
+
+  orderByKey() {
+    this.query = this.query.orderByKey();
+    return this;
+  }
+
+  orderByValue() {
+    this.query = this.query.orderByValue();
+    return this;
+  }
+
+  where(col, operator, value){
+    if(this.whereApplied == 0){
+      this.query = this.query.orderByChild(col);
+      this.whereApplied = 1;
+    }
+
+    if(operator == "="){
+      this.query = this.query.equalTo(value);
+      return this;
+    }
+
+    if (operator == ">") {
+      this.query = this.query.startAfter(value);
+      return this;
+    }
+
+    if (operator == ">=") {
+      this.query = this.query.startAt(value);
+      return this;
+    }
+
+    if (operator == "<=") {
+      this.query = this.query.endAt(value);
+      return this;
+    }
+
+    if (operator == "<") {
+      this.query = this.query.endBefore(value);
+      return this;
+    }
+
+    return this;
+  }
+
+  async executeQuery() {
+    return await this.query.once('value');
+  }
+
+  async get() {
+    return await this.executeQuery();
+    // this.query = await this.executeQuery();
+    // this.records = this.query.val();
+    // return this;
+  }
+
+  async count() {
+    const snapshot = await this.executeQuery();
+    return snapshot.numChildren();
+  }
+
+  async isExists() {
+    const snapshot = await this.executeQuery();
+    let c = snapshot.numChildren();
+    if(c > 0){
+      return true;
+    }
+
+    return false;
+  }
+}
+
+// function sortBy(data, column, asc_desc) {
+//   const usersArray = Object.keys(this.records).map(key => ({ key, ...this.records[key] }));
+//   // Sort the array by the "name" property
+//   usersArray.sort((a, b) => a[column].localeCompare(b[column]));
+//   this.records = usersArray;
+// }
+
+/*
+* there are exmple and explaination
+* operators are =, <, >, <= , >=
+* 
+* 
+* where  -> where(column, operator, value)
+*** only onle column is use, so other where ignore column
+*** if you use equal then you can not use other oprator
+*
+*/
+$(document).ready(async function(){
+
+  // is record exists example
+  // counts = await new FirebaseTable('reviews').isExists();
+  // console.log(counts);
+
+  // get records example
+  // records = await new FirebaseTable('reviews')
+  //   .limit(20, 'start')
+  //   .where('name', '<=', 'Udas panchi')
+  //   .get();
+  // console.log(records.val());
+
+  // counts example
+  // counts = await new FirebaseTable('reviews')
+  // .count();
+  // console.log(counts);
+
+  // new FirebaseTable('reviews')
+  //   .limit(20, 'start')
+  //   .where('name', '<=', 'Udas panchi')
+  //   .get()
+  //   .then(result => {
+  //   // to view results not part of code
+  //   const jsonData = JSON.stringify(result.val(), null, 2);
+  //   const htmlString = `<pre><code>${jsonData}</code></pre>`;
+  //   $("#console-result").html(htmlString); 
+  //   // print to console
+  //   console.log(result.val());
+  // }).catch(error => {
+  //   console.error(error);
+  // });
+  
+});
+</script>
+
+
+
+<!--
+https://firebase.google.com/docs/database/web/lists-of-data
+orderByKey()	Order results by child keys.
+orderByValue()	Order results by child values.
+limitToFirst()	Sets the maximum number of items to return from the beginning of the ordered list of results.
+limitToLast()	Sets the maximum number of items to return from the end of the ordered list of results.
+ -->
+
